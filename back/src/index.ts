@@ -16,6 +16,7 @@ app.use(cookieParser());
 app.use(cors({
   methods: "GET",
   origin: "http://localhost:8080",
+  credentials: true
 }));
 
 // TODO: Feed env variable in production

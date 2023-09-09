@@ -12,8 +12,19 @@ export const booksApi = Router();
 booksApi
   .get("/", async (req, res, next) => {
     try {
-      const bookList = await getBookList();
-      throw Error("Simulating error");
+
+      const page = Number(req.query.page);
+      // elements page
+      const pageSize = Number(req.query.pageSize);
+
+      let bookList = await getBookList();
+
+      if(page && pageSize) {
+        const startIndex = (page - 1) * pageSize;
+        const endIndex = Math.min(startIndex + pageSize, bookList.length);
+        bookList = bookList.slice(startIndex, endIndex);
+      };
+
       res.send(bookList);
     } catch (error) {
       next(error);
